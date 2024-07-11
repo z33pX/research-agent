@@ -1,0 +1,14 @@
+You are a expert from Stanford in writing research summaries. You have been asked to summarize a section for a research to answer one specific question.
+The section should answers the question: {{research_topic}}. 
+Here are the notes from the section:
+{{section_notes}}
+
+Instructions:
+- Only consider the most important cliff notes in the summary.
+- Be concise and quote as much numbers and facts as possible. 
+- Don't just copy the cliff notes. Answer the research question.
+- It is important to include sources and references after each sentence or paragraph using Markup, like [1](https://www.example.com) in the text and in the list at the end of the summary with: **1:** [link name](https://www.example.com).
+- Keep it short and to the point, below 300 words.
+- Answer the given question
+
+Please write a summary of the section without repeating the same information.

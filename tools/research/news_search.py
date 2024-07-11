@@ -8,6 +8,7 @@ from langchain_community.utilities import GoogleSerperAPIWrapper
 from pydantic import BaseModel
 from langfuse import Langfuse
 from typing import Type, List
+from prompts import Prompt
 from eezo import Eezo
 
 import logging
@@ -17,8 +18,8 @@ l = Langfuse()
 e = Eezo()
 
 agent = e.get_agent(os.environ["TOOL_EXA_COMPANY_SEARCH"])
-select_content = l.get_prompt("research-agent-select-content")
-summarize_search_results = l.get_prompt("summarize-search-results")
+select_content = Prompt("research-agent-select-content")
+summarize_search_results = Prompt("summarize-search-results")
 
 
 class NewsSearch(BaseTool):

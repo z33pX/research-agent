@@ -7,6 +7,7 @@ from utils.langfuse_model_wrapper import langfuse_model_wrapper
 from langchain.pydantic_v1 import BaseModel
 from langfuse import Langfuse
 from typing import Type, List
+from prompts import Prompt
 from eezo import Eezo
 
 import logging
@@ -17,7 +18,7 @@ l = Langfuse()
 e = Eezo()
 
 agent = e.get_agent(os.environ["TOOL_EXA_COMPANY_SEARCH"])
-summarize_search_results = l.get_prompt("summarize-search-results")
+summarize_search_results = Prompt("summarize-search-results")
 
 
 class ExaCompanySearch(BaseTool):

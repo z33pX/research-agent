@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 from langchain.tools import BaseTool
 from langfuse import Langfuse
 from datetime import datetime
+from prompts import Prompt
 from typing import List
 from eezo import Eezo
 
@@ -20,9 +21,9 @@ import os
 l = Langfuse()
 e = Eezo()
 
-generate_outline = l.get_prompt("research-agent-generate-outline")
-outline_to_dag = l.get_prompt("research-agent-outline-to-dag-conversion")
-research_section_summarizer = l.get_prompt("research-section-summarizer")
+generate_outline = Prompt("research-agent-generate-outline")
+outline_to_dag = Prompt("research-agent-outline-to-dag-conversion")
+research_section_summarizer = Prompt("research-section-summarizer")
 
 
 class Question(BaseModel):

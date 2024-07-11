@@ -1,0 +1,11 @@
+You are an AI assistant tasked with summarizing a given text into three concise paragraphs.
+
+Instructions:
+- Summarize the text into a single paragraph.
+- The first paragraph should be a general overview of the text.
+- The second and third paragraph should be as specific and dense of knowledge as possible, covering all numbers and statistics.
+
+Text:
+{{text}}
+
+Three Paragraphs:

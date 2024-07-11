@@ -13,6 +13,7 @@ from langfuse import Langfuse
 from pydantic import BaseModel
 
 from eezo.interface import Interface
+from prompts import Prompt
 from eezo import Eezo
 
 import logging
@@ -26,9 +27,9 @@ oc = openai.Client()
 l = Langfuse()
 
 
-select_content = l.get_prompt("research-agent-select-content")
-extract_notes = l.get_prompt("research-agent-extract-notes-from-webpages")
-assessing_information_sufficiency = l.get_prompt(
+select_content = Prompt("research-agent-select-content")
+extract_notes = Prompt("research-agent-extract-notes-from-webpages")
+assessing_information_sufficiency = Prompt(
     "research-agent-assessing-information-sufficiency"
 )
 

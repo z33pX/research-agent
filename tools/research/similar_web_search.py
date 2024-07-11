@@ -6,6 +6,7 @@ from langchain.pydantic_v1 import BaseModel
 from eezo.interface.message import Message
 from bs4 import BeautifulSoup
 from langfuse import Langfuse
+from prompts import Prompt
 from typing import Type
 from eezo import Eezo
 
@@ -16,8 +17,8 @@ l = Langfuse()
 e = Eezo()
 
 agent = e.get_agent(os.environ["TOOL_SIMILAR_WEB_SEARCH"])
-generate_paragraph = l.get_prompt("summarize-text-into-three-paragraphs")
-summarize_similarweb = l.get_prompt("summarize-similarweb-search-result")
+generate_paragraph = Prompt("summarize-text-into-three-paragraphs")
+summarize_similarweb = Prompt("summarize-similarweb-search-result")
 
 
 class SimilarWebSearch(BaseTool):

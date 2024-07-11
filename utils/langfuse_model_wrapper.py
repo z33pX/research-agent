@@ -43,7 +43,7 @@ def langfuse_model_wrapper(
         model=model,
         input=messages,
         metadata={"temperature": temperature},
-        prompt=prompt,
+        prompt=prompt if isinstance(prompt, TextPromptClient) else None,
     )
 
     start = time.time()

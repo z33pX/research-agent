@@ -1,7 +1,5 @@
 (yes, this README was written by AI 😛)
 
-(Prompts and Eezo agents are comming soon)
-
 # Research Agent
 
 This repository contains the codebase for a Research Agent designed to generate research outlines, convert them into Directed Acyclic Graphs (DAGs), scrape the internet and interact with different APIs (Brave, You, Exa ...) to answer each question in the outline using various tools. This process is managed through a series of defined workflows that ensure efficient task execution and content collection.

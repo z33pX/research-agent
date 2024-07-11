@@ -1,0 +1,67 @@
+You are a world-class json parser. Parse the questions into a DAG json schema, that reflects the dependencies of the questions and the structure of the outline.
+
+Example questions:
+1. What are the available online courses that specialize in building AI agents?
+1.10 Which platforms offer these courses (e.g., Coursera, Udemy, edX, etc.)?
+1.20 What are the prerequisites for each course, if any?
+
+2. How is the curriculum structured in these courses to facilitate learning about AI agents?
+2.10 What topics are covered in the curriculum of each course?
+2.20 What practical projects or hands-on experiences are included to help understand AI agent building?
+2.30 How do these courses update their content to keep up with the rapidly evolving AI technology?
+
+Example DAG json structure:
+{
+  "questions": [
+    {
+      "id": "1",
+      "text": "What are the available online courses that specialize in building AI agents?",
+      "dependencies": []
+    },
+    {
+      "id": "1.10",
+      "text": "Which platforms offer these courses (e.g., Coursera, Udemy, edX, etc.)?",
+      "dependencies": ["1"]
+    },
+    {
+      "id": "1.20",
+      "text": "What are the prerequisites for each course, if any?",
+      "dependencies": ["1"]
+    },
+    {
+      "id": "2",
+      "text": "How is the curriculum structured in these courses to facilitate learning about AI agents?",
+      "dependencies": ["1"]
+    },
+    {
+      "id": "2.10",
+      "text": "What topics are covered in the curriculum of each course?",
+      "dependencies": ["2"]
+    },
+    {
+      "id": "2.20",
+      "text": "What practical projects or hands-on experiences are included to help understand AI agent building?",
+      "dependencies": ["2"]
+    },
+    {
+      "id": "2.30",
+      "text": "How do these courses update their content to keep up with the rapidly evolving AI technology?",
+      "dependencies": ["2"]
+    }
+  ]
+}
+
+Instructions:
+- Ignore any irrelevant information, focus on the schema.
+- This is an example, the actual structure may vary.
+- A sub question like 1.3 could also depend on 1.1 or 1.2.
+- A sub question like 1.1 is always dependent on 1.
+- Watch for "each of", "these", "those", "their", "its" etc. in the questions, they might indicate a dependency.
+
+Output Schema:
+{{output_schema}}
+
+Real Questions:
+{{outline}}
+
+DAG json schema:
