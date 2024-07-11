@@ -8,6 +8,12 @@ This repository contains the codebase for a Research Agent designed to generate 
 
 Feel free to add your own tools to connect more datasources.
 
+<div align="center">
+  <a href="https://youtu.be/p_OGO7mT5_4">
+    <img src="https://img.youtube.com/vi/p_OGO7mT5_4/maxresdefault.jpg" alt="YouTube Video Demo">
+  </a>
+</div>
+
 ## Overview
 
 The Research Agent automates the process of generating research content by leveraging LLMs to create a structured workflow. The workflow consists of generating an outline, converting it into a DAG, and using task scheduling to collect and summarize content. The diagram below illustrates the entire process flow.
