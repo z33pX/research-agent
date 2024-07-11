@@ -1,0 +1,65 @@
+# !Rename this file to .env!
+
+# OpenAI
+
+OPENAI_API_KEY =
+
+# Pinecone
+
+PINECONE_API_KEY =
+PINECONE_ENVIRONMENT =
+
+# Eezo
+
+EEZO_API_KEY =
+
+# For sending direct messages
+
+EEZO_EEZO_ID =
+THREAD_ID =
+
+# Agent
+
+AGENT_RESEARCH =
+
+# Tools
+
+TOOL_SIMILAR_WEB_SEARCH =
+TOOL_EXA_COMPANY_SEARCH =
+TOOL_YOU_COM_SEARCH =
+TOOL_NEWS_SEARCH =
+
+# Exa
+
+EXA_API_KEY =
+
+# Zyte
+
+ZYTE_API_KEY =
+
+# Groq
+
+GROQ_API_KEY =
+
+# You.com
+
+YOUCOM_API_KEY =
+YOUCOM_RAG_API_KEY =
+
+# Brave Search
+
+BRAVE_SEARCH_API_KEY =
+
+# SerperApi
+
+SERPER_API_KEY =
+
+# Antropic
+
+ANTHROPIC_API_KEY =
+
+# Langfuse
+
+LANGFUSE_SECRET_KEY =
+LANGFUSE_PUBLIC_KEY =
+LANGFUSE_HOST = https://cloud.langfuse.com
