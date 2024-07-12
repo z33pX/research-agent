@@ -345,17 +345,20 @@ class ResearchTask:
             )
             if len(research_topics) > 0:
                 # Yes, we need more information.
-                results = self.collect_content(db, tools, research_topics[0])
+                for research_topic in research_topics:
+                    results = self.collect_content(db, tools, research_topic)
 
-                m.add(
-                    "text", text=f"Found new content for **{research_topics[0]}**\n\n"
-                )
-                for content in results:
-                    db.upsert_doc(content)
-                    logging.info(f"- {content.snippet}")
-                    m.add("text", text=f"- [{content.title}]({content.url})")
+                    m.add(
+                        "text", text=f"Found new content for **{research_topic}**\n\n"
+                    )
+                    for content in results:
+                        db.upsert_doc(content)
+                        logging.info(f"- {content.snippet}")
+                        m.add("text", text=f"- [{content.title}]({content.url})")
 
-                content_ids.extend([content.id for content in results])
+                    content_ids.extend([content.id for content in results])
+            else:
+                logging.info(f"Content is sufficient for '{self.research_topic}'")
         else:
             # We definitely need more information.
             results = self.collect_content(db, tools, self.research_topic)
