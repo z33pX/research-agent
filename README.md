@@ -2,9 +2,11 @@
 
 # Research Agent
 
-This repository contains the codebase for a Research Agent designed to generate research outlines, convert them into Directed Acyclic Graphs (DAGs), scrape the internet and interact with different APIs (Brave, You, Exa ...) to answer each question in the outline using various tools. This process is managed through a series of defined workflows that ensure efficient task execution and content collection.
+This Research Agent is designed to generate a research outline, convert it into a Directed Acyclic Graph, scrape the internet, and interact with various APIs (such as Brave, You, Exa, etc.) to answer each question in the outline using a variety of tools. You can also add your own tools to connect additional data sources.
 
-Feel free to add your own tools to connect more datasources.
+Consider this a draft. There is potential to improve both the repository and the agent itself. Contributions are welcome!
+
+# Demo
 
 <div align="center">
   <a href="https://youtu.be/p_OGO7mT5_4">
