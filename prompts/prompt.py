@@ -19,7 +19,7 @@ class Prompt:
             )
             self.from_langfuse = False
             current_dir = os.path.dirname(os.path.realpath(__file__))
-            prompt_folder = os.path.join(current_dir, "prompts")
+            prompt_folder = os.path.join(current_dir, "prompt_files")
             # Read all prompts.txt files. The file name is the prompt id.
             prompts = {}
             for file in os.listdir(prompt_folder):
@@ -30,7 +30,7 @@ class Prompt:
 
             if self.template is None:
                 raise ValueError(
-                    f"Prompt with id {self.prompt_id} not found in prompts.json"
+                    f"Prompt with id {self.prompt_id} not found in folder {prompt_folder}"
                 )
 
     def compile(self, **kwargs):
