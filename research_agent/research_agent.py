@@ -14,8 +14,6 @@ from typing import List
 from eezo import Eezo
 
 import json
-import uuid
-import os
 
 
 l = Langfuse()

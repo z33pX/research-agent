@@ -12,14 +12,17 @@ from prompts import Prompt
 from eezo import Eezo
 
 import logging
-import os
 
 l = Langfuse()
 e = Eezo()
 
-agent = e.get_agent(os.environ["TOOL_EXA_COMPANY_SEARCH"])
 select_content = Prompt("research-agent-select-content")
 summarize_search_results = Prompt("summarize-search-results")
+agent = e.get_agent("news_search")
+if agent is None:
+    agent = e.create_agent(
+        agent_id="news_search", description="Invoke when user wants to search for news."
+    )
 
 
 class NewsSearch(BaseTool):

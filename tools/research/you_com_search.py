@@ -14,8 +14,13 @@ import os
 l = Langfuse()
 e = Eezo()
 
-agent = e.get_agent(os.environ["TOOL_YOU_COM_SEARCH"])
 summarize_search_results = Prompt("summarize-search-results")
+agent = e.get_agent("you_com_search")
+if agent is None:
+    agent = e.create_agent(
+        agent_id="you_com_search",
+        description="Invoke when the user asks a general question. It works like Google Search. Don't use this to search for companies.",
+    )
 
 
 class YouComSearch(BaseTool):

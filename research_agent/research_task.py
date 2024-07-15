@@ -115,10 +115,14 @@ class ResearchTask:
         logging.info("------" * 10)
         logging.info(f"Chosen snippet for question '{research_topic}'")
         results = []
+        m = self.eezo_interface.new_message()
+        m.add("text", text=f"Decided to focus on:\n")
         for idx in choosen_ids:
             snippet = content_objs[idx].snippet[:150]
             logging.info(f"- {snippet} ...")
             results.append({"content_id": content_ids[idx], "snippet": snippet})
+            m.add("text", text=f"- {content_objs[idx].title}")
+        m.notify()
         logging.info("------" * 10)
 
         content_ids_to_use = [content_ids[i] for i in choosen_ids]
@@ -338,6 +342,8 @@ class ResearchTask:
         content_ids = [item for sublist in content_ids for item in sublist]
 
         m = self.eezo_interface.new_message()
+        m.add("text", text=f"Researching **{self.research_topic}**...\n\n")
+        m.notify()
         if content_ids:
             # Do we need more information besides the given content?
             research_topics = self.check_if_more_info_needed(

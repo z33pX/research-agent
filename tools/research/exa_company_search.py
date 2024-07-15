@@ -17,8 +17,13 @@ import os
 l = Langfuse()
 e = Eezo()
 
-agent = e.get_agent(os.environ["TOOL_EXA_COMPANY_SEARCH"])
 summarize_search_results = Prompt("summarize-search-results")
+agent = e.get_agent("exa_company_search")
+if agent is None:
+    agent = e.create_agent(
+        agent_id="exa_company_search",
+        description="Invoke when the user wants to search one or multiple companies. This tool only finds companies that might fit the user request and returns only company urls and landingpage summaries. No other data. This tool cannot compare companies or find similar companies.",
+    )
 
 
 class ExaCompanySearch(BaseTool):

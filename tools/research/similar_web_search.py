@@ -16,9 +16,24 @@ import os
 l = Langfuse()
 e = Eezo()
 
-agent = e.get_agent(os.environ["TOOL_SIMILAR_WEB_SEARCH"])
 generate_paragraph = Prompt("summarize-text-into-three-paragraphs")
 summarize_similarweb = Prompt("summarize-similarweb-search-result")
+agent = e.get_agent("similar-web-search")
+if agent is None:
+    agent = e.create_agent(
+        name="SimilarWeb Search",
+        description="Search for a website on SimilarWeb and generate a detailed report.",
+        input_schema={
+            "entity_name": {
+                "type": "string",
+                "description": "Entity name to search for on SimilarWeb.",
+            },
+            "instructions": {
+                "type": "string",
+                "description": "Instructions on how to process the raw text.",
+            },
+        },
+    )
 
 
 class SimilarWebSearch(BaseTool):
