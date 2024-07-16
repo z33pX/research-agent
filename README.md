@@ -22,6 +22,12 @@ The Research Agent automates the process of generating research content by lever
 
 ## Workflow Description
 
+<div align="center">
+  <a href="https://youtu.be/CoBMtCuA4MM">
+    <img src="https://img.youtube.com/vi/CoBMtCuA4MM/maxresdefault.jpg" alt="YouTube Video Demo">
+  </a>
+</div>
+
 ### 1. User Interaction
 
 - **User Prompt:** The user initiates the process by providing a prompt.
