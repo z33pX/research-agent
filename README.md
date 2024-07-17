@@ -1,10 +1,12 @@
 # Research Agent
 
-This Research Agent is designed to generate a research outline, convert it into a Directed Acyclic Graph, scrape webpages, and interact with various APIs (such as Brave, You, Exa, etc.) to answer each question in the outline using a variety of tools. You can also add your own tools to connect additional data sources.
+The Research Agent is a powerful tool designed to automate the process of gathering and summarizing research information using a variety of APIs and web scraping tools.
+
+It generates research outlines, converts them into Directed Acyclic Graphs (DAGs), scrapes webpages, and interacts with APIs (such as Brave, You, Exa, etc.) to answer each question in the outline. You can also add your own tools to connect additional data sources.
 
 Consider this a draft. There is potential to improve both the repository and the agent itself. Contributions are welcome!
 
-# Demo
+## Demo
 
 [Langfuse Trace](https://cloud.langfuse.com/project/clvdpeujs0000hl9b7qqzw4n7/traces/ce95336f-418e-41df-8b4f-bf9cef10f364?observation=31f3979a-9c2f-4102-bc02-420744ea2f17&display=details)
 
@@ -12,11 +14,12 @@ Consider this a draft. There is potential to improve both the repository and the
   <a href="https://youtu.be/p_OGO7mT5_4">
     <img src="https://img.youtube.com/vi/p_OGO7mT5_4/maxresdefault.jpg" alt="YouTube Video Demo">
   </a>
+  <p>Watch our demo to see the Research Agent in action, from generating research outlines to summarizing comprehensive responses.</p>
 </div>
 
 ## Overview
 
-This research agent workflow involves a user providing a prompt, which is processed by a LLM to generate an outline and a directed acyclic graph (DAG) of research topics (questions and their sub-questions). The task scheduler then executes tasks for each topic, collecting and storing content using various search tools (LangChain plug-and-play), evaluating its relevancy, and potentially generating additional research topics if more content is needed. After extracting cliff notes for each topic, the agent combines and summarizes them into one concise summary.
+This research agent workflow involves a user providing a prompt, which is processed by an LLM to generate an outline and a directed acyclic graph (DAG) of research topics (questions and their sub-questions). The task scheduler then executes tasks for each topic, collecting and storing content using various search tools (LangChain plug-and-play), evaluating its relevancy, and potentially generating additional research topics if more content is needed. After extracting cliff notes for each topic, the agent combines and summarizes them into one concise summary.
 
 ![Research Agent Workflow](images/research-agent-v2.png)
 
@@ -112,7 +115,7 @@ To get started with this research agent, follow these steps:
 
    ```bash
    python3 -m venv venv
-   source venv/bin/activate   # On Windows use `venv\Scripts\activate`
+   source venv/bin/activate   # On Windows use `venv\Scriptsctivate`
    ```
 
 4. **Install the required dependencies:**
@@ -129,20 +132,19 @@ To get started with this research agent, follow these steps:
    ```
 
 6. **Run the agent:**
+
    ```bash
    python app.py
    ```
 
 ## Contributing
 
-We welcome contributions to enhance this project. Please fork the repository and create a pull request with your improvements.
+We welcome contributions to enhance this project, whether it's adding new tools, fixing bugs, or improving documentation. Please fork the repository and create a pull request with your improvements.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://opensource.org/license/mit) file for details.
+This project is licensed under the MIT License, allowing for free use, modification, and distribution. See the [LICENSE](https://opensource.org/license/mit) file for details.
 
 ## Contact
 
 For any questions or suggestions, please contact the project maintainer on [X (Twitter)](https://x.com/dan_schoenbohm).
-
----
