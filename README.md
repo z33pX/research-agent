@@ -1,8 +1,6 @@
-(yes, this README was written by AI 😛)
-
 # Research Agent
 
-This Research Agent is designed to generate a research outline, convert it into a Directed Acyclic Graph, scrape the internet, and interact with various APIs (such as Brave, You, Exa, etc.) to answer each question in the outline using a variety of tools. You can also add your own tools to connect additional data sources.
+This Research Agent is designed to generate a research outline, convert it into a Directed Acyclic Graph, scrape webpages, and interact with various APIs (such as Brave, You, Exa, etc.) to answer each question in the outline using a variety of tools. You can also add your own tools to connect additional data sources.
 
 Consider this a draft. There is potential to improve both the repository and the agent itself. Contributions are welcome!
 
@@ -16,7 +14,7 @@ Consider this a draft. There is potential to improve both the repository and the
 
 ## Overview
 
-The Research Agent automates the process of generating research content by leveraging LLMs to create a structured workflow. The workflow consists of generating an outline, converting it into a DAG, and using task scheduling to collect and summarize content. The diagram below illustrates the entire process flow.
+This research agent workflow involves a user providing a prompt, which is processed by a LLM to generate an outline and a directed acyclic graph (DAG) of research topics (questions and their sub-questions). The task scheduler then executes tasks for each topic, collecting and storing content using various search tools (LangChain plug-and-play), evaluating its relevancy, and potentially generating additional research topics if more content is needed. After extracting cliff notes for each topic, the agent combines and summarizes them into one concise summary.
 
 ![Research Agent Workflow](images/research-agent-v2.png)
 
@@ -36,7 +34,7 @@ The Research Agent automates the process of generating research content by lever
 ### 2. Outline Generation
 
 - **LLM - Generate Outline:** The LLM creates a research outline based on the user prompt.
-- **Generate DAG:** The outline is then converted into a JSON DAG by the LLM.
+- **Generate DAG:** The outline is then converted into a JSON DAG by another LLM.
 
 ### 3. Task Scheduling
 
@@ -47,14 +45,13 @@ The Research Agent automates the process of generating research content by lever
 - **Execute Task:** Each task from the DAG is executed.
 - **Result Handling:** Results are either collected from existing content or new content is gathered.
   - **Load Existing Content:** Checks if content from previous tasks can be used.
-  - **Root Task Check:** Determines if the current task is a root task.
   - **Collect Content:** If new content is needed, it is collected, processed and added to the state and database.
 
 ### 5. Content Collection Flow
 
 - **Pick Tools to Get Information:** The LLM selects the appropriate tools for information gathering.
-- **Scrape and Store:** Tools are executed to scrape the internet, and the content is stored.
-  - **Scrape:** Various tools like YouComSearch, SimilarWebSearch, ExaCompanySearch, and NewsSearch are used to gather content.
+- **Scrape and Store:** Tools are executed to scrape webpages and retrieve data from APIs. Then, the content is stored.
+  - **Scrape and retrieve:** Various tools like YouComSearch, SimilarWebSearch, ExaCompanySearch, and NewsSearch are used to gather content.
   - **Store:** The collected content is stored to be retrieved later by subsequent tasks or other research jobs.
 
 ### 6. Content Processing
@@ -67,13 +64,31 @@ The Research Agent automates the process of generating research content by lever
 
 - **LLM - Summarize Task Result:** The final results are summarized and concatenated, providing the user with a comprehensive research output.
 
-## Features
+## Tools
 
-- **Automated Research Outline Generation:** Quickly create structured research outlines based on user prompts.
-- **Directed Acyclic Graph (DAG) Conversion:** Efficiently organize tasks using DAGs for systematic execution.
-- **Dynamic Content Collection:** Use multiple tools to gather relevant information from the internet.
-- **Intelligent Task Scheduling:** Manage and execute tasks in a logical sequence.
-- **Comprehensive Summarization:** Summarize collected content into concise, useful information.
+### News Search
+
+This tool searches for news on Google using the Serper API by first selecting relevant links with an LLM. It then scrapes the selected websites for content, which is processed by the LLM to generate a response.
+
+![News Search](images/news-search-tool.png)
+
+### You.com Search
+
+This tool searches for information using the You.com Search Engine by first selecting relevant results. It then processes these results using an LLM, which generates a response based on the user prompt and contextual information.
+
+![You Com Search](images/youcom-search.png)
+
+### Similar Web Search
+
+This tool retrieves relevant data from SimilarWeb based on the user prompt. For example, if the prompt "Get web traffic for Tesla" does not include the relevant domain, the tool first searches for related domains using Brave Search. After finding the domain, it inserts it into a SimilarWeb URL, scrapes the page using Zyte, and provides the content to GPT-4o for summarization before delivering the final response to the user.
+
+![Similar Web Search](images/similar-web-search.png)
+
+### Exa Company Search
+
+This tool processes user queries by first using Exa Company Search to find relevant company information. It then scrapes the identified websites for content, which is subsequently processed by an LLM to generate a response for the user.
+
+![Exa Company Search](images/exa-company-search.png.png)
 
 ## Getting Started
 
