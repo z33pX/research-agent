@@ -6,6 +6,8 @@ Consider this a draft. There is potential to improve both the repository and the
 
 # Demo
 
+[Langfuse Trace](https://cloud.langfuse.com/project/clvdpeujs0000hl9b7qqzw4n7/traces/ce95336f-418e-41df-8b4f-bf9cef10f364?observation=31f3979a-9c2f-4102-bc02-420744ea2f17&display=details)
+
 <div align="center">
   <a href="https://youtu.be/p_OGO7mT5_4">
     <img src="https://img.youtube.com/vi/p_OGO7mT5_4/maxresdefault.jpg" alt="YouTube Video Demo">
