@@ -88,7 +88,7 @@ This tool retrieves relevant data from SimilarWeb based on the user prompt. For 
 
 This tool processes user queries by first using Exa Company Search to find relevant company information. It then scrapes the identified websites for content, which is subsequently processed by an LLM to generate a response for the user.
 
-![Exa Company Search](images/exa-company-search.png.png)
+![Exa Company Search](images/exa-company-search.png)
 
 ## Getting Started
 
