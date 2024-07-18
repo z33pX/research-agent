@@ -4,13 +4,12 @@ from .research_task_scheduler import TaskScheduler
 from .research_task import ResearchTask, TaskResult
 from langfuse.client import StatefulTraceClient
 
-from eezo.interface import Interface
+from eezo.interface import Context
 from pydantic import BaseModel, Field
 from langchain.tools import BaseTool
 from langfuse import Langfuse
 from datetime import datetime
-from prompts import Prompt
-from typing import List
+from typing import List, Dict, Any
 from eezo import Eezo
 
 import json
@@ -19,9 +18,9 @@ import json
 l = Langfuse()
 e = Eezo()
 
-generate_outline = Prompt("research-agent-generate-outline")
-outline_to_dag = Prompt("research-agent-outline-to-dag-conversion")
-research_section_summarizer = Prompt("research-section-summarizer")
+generate_outline = l.get_prompt("research-agent-generate-outline")
+outline_to_dag = l.get_prompt("research-agent-outline-to-dag-conversion")
+research_section_summarizer = l.get_prompt("research-section-summarizer")
 
 
 class Question(BaseModel):
@@ -44,7 +43,7 @@ class Question(BaseModel):
         description="A list of IDs that this question depends on. An empty array indicates no dependencies.",
     )
 
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, Any]:
         """
         Converts the Question to a dictionary.
 
@@ -72,7 +71,7 @@ class ResearchOutline(BaseModel):
         min_items=1,
     )
 
-    def to_dict(self):
+    def to_dict(self) -> Dict["str", Any]:
         """
         Converts the ResearchOutline to a dictionary.
 
@@ -100,39 +99,45 @@ class ResearchAgent:
         self.tools = tools
         self.langfuse = Langfuse()
 
-    def invoke(self, interface: Interface, **kwargs):
+    def invoke(self, eezo_context: Context, **kwargs) -> None:
         """
         Executes the research process.
 
         Args:
-            interface (Interface): The interface to communicate with.
+            eezo_context (Context): The eezo_context to communicate with.
             **kwargs: Additional keyword arguments, including the user's query.
         """
+
         trace: StatefulTraceClient = self._start_trace()
-        self._send_message(interface, trace, "Generating outline...")
+        self._send_message(eezo_context, trace, "Generating outline...")
 
+        # Genreate oultine
         outline: str = self._generate_outline(trace, kwargs["query"])
-        self._send_message(interface, trace, "Generating outline... done.", outline)
+        self._send_message(eezo_context, trace, "Generating outline... done.", outline)
 
+        # Convert outline to DAG
         research_outline: ResearchOutline = self._convert_outline_to_dag(trace, outline)
-        self._send_message(interface, trace, "Planning tasks... done.")
+        self._send_message(eezo_context, trace, "Planning tasks... done.")
 
-        results: List[TaskResult] = self._execute_tasks(
-            research_outline, trace, interface
+        # Plan and execute tasks
+        results: List[TaskResult] = self._plan_and_execute(
+            research_outline, trace, eezo_context
         )
 
-        self._save_results_to_file(outline, kwargs["query"], research_outline, results)
-
+        # Generate final report
         final_report = self._generate_final_report(results, trace)
-        self._send_message(interface, trace, "Generating final report...", final_report)
+        self._send_message(
+            eezo_context, trace, "Generating final report...", final_report
+        )
 
+        # Save final report to json file
         self._save_final_report(
             outline, kwargs["query"], research_outline, results, final_report
         )
 
     def _start_trace(self) -> StatefulTraceClient:
         """
-        Starts a new trace for the research process.
+        Starts a new Langfuse trace for the research process.
 
         Returns:
             StatefulTraceClient: The trace client instance.
@@ -159,7 +164,7 @@ class ResearchAgent:
             user_prompt=query,
         )
 
-    def _convert_outline_to_dag(self, trace, outline: str):
+    def _convert_outline_to_dag(self, trace, outline: str) -> ResearchOutline:
         """
         Converts the research outline into a directed acyclic graph (DAG).
 
@@ -180,8 +185,8 @@ class ResearchAgent:
             base_model=ResearchOutline,
         )
 
-    def _execute_tasks(
-        self, research_outline: ResearchOutline, trace, interface: Interface
+    def _plan_and_execute(
+        self, research_outline: ResearchOutline, trace, eezo_context: Context
     ) -> List[TaskResult]:
         """
         Executes the research tasks based on the DAG.
@@ -189,16 +194,20 @@ class ResearchAgent:
         Args:
             research_outline (ResearchOutline): The research outline as a DAG.
             trace (StatefulTraceClient): The trace client instance.
-            interface (Interface): The interface to communicate with.
+            eezo_context (Context): The eezo_context to communicate with.
 
         Returns:
-            dict: The results of the research tasks.
+            List[TaskResult]: The results of the research tasks.
         """
         task_list = []
         for question in research_outline.questions:
             task_list.append(
                 ResearchTask(
-                    question.id, question.text, question.dependencies, trace, interface
+                    id=question.id,
+                    research_topic=question.text,
+                    dependencies=question.dependencies,
+                    trace=trace,
+                    eezo_context=eezo_context,
                 )
             )
 
@@ -206,7 +215,7 @@ class ResearchAgent:
         scheduler.execute()
         return scheduler.get_results()
 
-    def _generate_final_report(self, results: List[TaskResult], trace):
+    def _generate_final_report(self, results: List[TaskResult], trace) -> str:
         """
         Generates the final report from the research results.
 
@@ -240,36 +249,6 @@ class ResearchAgent:
                 final_report += f"**{task_result.id} {task_result.research_topic}**\n{section_summary}\n\n"
         return final_report
 
-    def _save_results_to_file(
-        self,
-        outline: str,
-        query: str,
-        research_outline: ResearchOutline,
-        results: List[TaskResult],
-    ):
-        """
-        Saves the intermediate research results to a JSON file.
-
-        Args:
-            outline (str): The research outline.
-            query (str): The user's query.
-            research_outline (ResearchOutline): The research outline as a DAG.
-            results (dict): The results of the research tasks.
-        """
-        human_readable_timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-        with open(f"research_{human_readable_timestamp}.json", "w") as f:
-            json.dump(
-                {
-                    "outline": outline,
-                    "query": query,
-                    "dag": json.loads(research_outline.model_dump_json()),
-                    "results": [result.to_dict() for result in results],
-                    "final_report": "",
-                },
-                f,
-                indent=4,
-            )
-
     def _save_final_report(
         self,
         outline: str,
@@ -277,7 +256,7 @@ class ResearchAgent:
         research_outline: ResearchOutline,
         results: List[TaskResult],
         final_report: str,
-    ):
+    ) -> None:
         """
         Saves the final research report to a JSON file.
 
@@ -302,19 +281,21 @@ class ResearchAgent:
                 indent=4,
             )
 
-    def _send_message(self, interface: Interface, trace, text: str, content: str = ""):
+    def _send_message(
+        self, eezo_context: Context, trace, text: str, content: str = ""
+    ) -> None:
         """
-        Sends a message to the Eezo interface, optionally including additional content.
+        Sends a message to the Eezo eezo_context, optionally including additional content.
 
         Args:
-            interface (Interface): The interface to communicate with.
+            eezo_context (Context): The eezo_context to communicate with.
             trace (StatefulTraceClient): The trace client instance.
             text (str): The text message to send.
             content (str): Additional content to include in the message.
         """
-        if interface:
+        if eezo_context:
             span = self.langfuse.span(trace_id=trace.id, name="EezoMessage")
-            m = interface.new_message()
+            m = eezo_context.new_message()
             c = m.add("text", text=text)
             if content:
                 m.replace(c.id, "text", text=content)

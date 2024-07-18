@@ -8,6 +8,7 @@ from langchain.pydantic_v1 import BaseModel
 from langfuse import Langfuse
 from typing import Type, List
 from prompts import Prompt
+from eezo.agent import Agent
 from eezo import Eezo
 
 import logging
@@ -18,16 +19,16 @@ l = Langfuse()
 e = Eezo()
 
 summarize_search_results = Prompt("summarize-search-results")
-agent = e.get_agent("exa_company_search")
+agent: Agent = e.get_agent("exa-company-search")
 if agent is None:
-    agent = e.create_agent(
-        agent_id="exa_company_search",
+    agent: Agent = e.create_agent(
+        agent_id="exa-company-search",
         description="Invoke when the user wants to search one or multiple companies. This tool only finds companies that might fit the user request and returns only company urls and landingpage summaries. No other data. This tool cannot compare companies or find similar companies.",
     )
 
 
 class ExaCompanySearch(BaseTool):
-    name: str = agent.name
+    name: str = agent.agent_id
     description: str = agent.description
     args_schema: Type[BaseModel] = agent.input_model
     include_summary: bool = False

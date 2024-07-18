@@ -6,6 +6,7 @@ from langchain.pydantic_v1 import BaseModel
 from langfuse import Langfuse
 from prompts import Prompt
 from typing import Type
+from eezo.agent import Agent
 from eezo import Eezo
 
 import requests
@@ -15,16 +16,16 @@ l = Langfuse()
 e = Eezo()
 
 summarize_search_results = Prompt("summarize-search-results")
-agent = e.get_agent("you_com_search")
+agent: Agent = e.get_agent("you-com-search")
 if agent is None:
-    agent = e.create_agent(
-        agent_id="you_com_search",
+    agent: Agent = e.create_agent(
+        agent_id="you-com-search",
         description="Invoke when the user asks a general question. It works like Google Search. Don't use this to search for companies.",
     )
 
 
 class YouComSearch(BaseTool):
-    name: str = agent.name
+    name: str = agent.agent_id
     description: str = agent.description
     args_schema: Type[BaseModel] = agent.input_model
     include_summary: bool = False

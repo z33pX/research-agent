@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from langfuse import Langfuse
 from typing import Type, List
 from prompts import Prompt
+from eezo.agent import Agent
 from eezo import Eezo
 
 import logging
@@ -18,15 +19,15 @@ e = Eezo()
 
 select_content = Prompt("research-agent-select-content")
 summarize_search_results = Prompt("summarize-search-results")
-agent = e.get_agent("news_search")
+agent: Agent = e.get_agent("news-search")
 if agent is None:
-    agent = e.create_agent(
-        agent_id="news_search", description="Invoke when user wants to search for news."
+    agent: Agent = e.create_agent(
+        agent_id="news-search", description="Invoke when user wants to search for news."
     )
 
 
 class NewsSearch(BaseTool):
-    name: str = agent.name
+    name: str = agent.agent_id
     description: str = agent.description
     args_schema: Type[BaseModel] = agent.input_model
     include_summary: bool = False

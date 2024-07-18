@@ -6,6 +6,7 @@ dotenv.load_dotenv()
 logging.basicConfig(level=logging.INFO, format="%(asctime)s: %(message)s")
 
 from research_agent import ResearchAgent
+from eezo.agent import Agent
 from eezo import Eezo
 from tools import *
 
@@ -17,10 +18,10 @@ e = Eezo()
 tools = [YouComSearch(), SimilarWebSearch(), ExaCompanySearch(), NewsSearch()]
 
 # Check if the agent already exists, if not, create it.
-ra = e.get_agent("research_agent")
+ra: Agent = e.get_agent("research-agent")
 if ra is None:
     e.create_agent(
-        agent_id="research_agent",
+        agent_id="research-agent",
         description="Invoke when the user wants to perform a research task.",
     )
 
@@ -29,7 +30,7 @@ research_agent = ResearchAgent(tools)
 
 
 # Define the handler for the research_agent event.
-@e.on("research_agent")
+@e.on("research-agent")
 def research_agent_handler(context, **kwargs):
     research_agent.invoke(context, **kwargs)
 

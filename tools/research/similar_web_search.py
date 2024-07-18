@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from langfuse import Langfuse
 from prompts import Prompt
 from typing import Type
+from eezo.agent import Agent
 from eezo import Eezo
 
 import requests
@@ -18,10 +19,10 @@ e = Eezo()
 
 generate_paragraph = Prompt("summarize-text-into-three-paragraphs")
 summarize_similarweb = Prompt("summarize-similarweb-search-result")
-agent = e.get_agent("similar-web-search")
+agent: Agent = e.get_agent("similar-web-search")
 if agent is None:
-    agent = e.create_agent(
-        name="SimilarWeb Search",
+    agent: Agent = e.create_agent(
+        agent_id="similar-web-search",
         description="Search for a website on SimilarWeb and generate a detailed report.",
         input_schema={
             "entity_name": {
@@ -37,7 +38,7 @@ if agent is None:
 
 
 class SimilarWebSearch(BaseTool):
-    name: str = agent.name
+    name: str = agent.agent_id
     description: str = agent.description
     args_schema: Type[BaseModel] = agent.input_model
     user_prompt: str | None = None
