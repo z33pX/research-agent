@@ -9,10 +9,9 @@ l = Langfuse()
 
 class Prompt:
     def __init__(self, prompt_id):
-        self.prompt_id = prompt_id
         self.from_langfuse = True
         try:
-            self.template = l.get_prompt(self.prompt_id)
+            self.template = l.get_prompt(prompt_id)
         except Exception:
             logging.info(
                 f"Loading prompt {prompt_id} from Langfuse failed. Loading from prompts.txt"
@@ -26,15 +25,17 @@ class Prompt:
                 with open(os.path.join(prompt_folder, file), "r") as f:
                     prompts[file.split(".")[0]] = f.read()
 
-            self.template = prompts.get(self.prompt_id)
+            self.template = prompts.get(prompt_id)
 
             if self.template is None:
                 raise ValueError(
-                    f"Prompt with id {self.prompt_id} not found in folder {prompt_folder}"
+                    f"Prompt with id {prompt_id} not found in folder {prompt_folder}"
                 )
 
     def compile(self, **kwargs):
         template = self.template
         if not self.from_langfuse:
             template = re.sub(r"{{\s*(\w+)\s*}}", r"{\1}", template)
-        return template.format(**kwargs)
+            return template.format(**kwargs)
+        # Compile Langfuse template
+        return template.compile(**kwargs)
