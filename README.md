@@ -6,13 +6,19 @@ It generates research outlines, converts them into Directed Acyclic Graphs (DAGs
 
 Consider this a draft. There is potential to improve both the repository and the agent itself. Contributions are welcome!
 
+### Areas of Improvement
+
+Flat vs. Depth: The research agent works well for topics that are widely covered on the internet, such as USA visa options and key metrics for SaaS companies. However, it is less effective for in-depth searches.
+
+The planning step does not include any form of reflection or feedback from the user.
+
 ## Demo
 
 [Langfuse Trace](https://cloud.langfuse.com/project/clvdpeujs0000hl9b7qqzw4n7/traces/ce95336f-418e-41df-8b4f-bf9cef10f364?observation=31f3979a-9c2f-4102-bc02-420744ea2f17&display=details)
 
 <div align="center">
-  <a href="https://youtu.be/p_OGO7mT5_4">
-    <img src="https://img.youtube.com/vi/p_OGO7mT5_4/maxresdefault.jpg" alt="YouTube Video Demo">
+  <a href="https://youtu.be/JLB8A0O7C5g">
+    <img src="https://img.youtube.com/vi/JLB8A0O7C5g/maxresdefault.jpg" alt="YouTube Video Demo">
   </a>
   <p>Watch our demo to see the Research Agent in action, from generating research outlines to summarizing comprehensive responses.</p>
 </div>
