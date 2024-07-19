@@ -35,4 +35,40 @@ def research_agent_handler(context, **kwargs):
     research_agent.invoke(context, **kwargs)
 
 
+# Define the handlers for the tools.
+# We can use the same handler for all tools since they all have the same structure.
+
+
+@e.on("you-com-search")
+def you_com_search_handler(context, **kwargs):
+    result = YouComSearch(include_summary=True).invoke(input=kwargs)
+    m = context.new_message()
+    m.add("text", text=result.summary)
+    m.notify()
+
+
+@e.on("similar-web-search")
+def similar_web_search_handler(context, **kwargs):
+    result = SimilarWebSearch(include_summary=True).invoke(input=kwargs)
+    m = context.new_message()
+    m.add("text", text=result.summary)
+    m.notify()
+
+
+@e.on("exa-company-search")
+def exa_company_search_handler(context, **kwargs):
+    result = ExaCompanySearch(include_summary=True).invoke(input=kwargs)
+    m = context.new_message()
+    m.add("text", text=result.summary)
+    m.notify()
+
+
+@e.on("news-search")
+def news_search_handler(context, **kwargs):
+    result = NewsSearch(include_summary=True).invoke(input=kwargs)
+    m = context.new_message()
+    m.add("text", text=result.summary)
+    m.notify()
+
+
 e.connect()

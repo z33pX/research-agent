@@ -5,7 +5,9 @@ from .db import ContentDB
 from langchain.tools import BaseTool
 from collections import defaultdict
 from typing import List, Dict
+
 import concurrent.futures
+import traceback
 import threading
 import logging
 import os
@@ -73,9 +75,9 @@ class TaskScheduler:
         try:
             result: TaskResult = task.execute(self.db, self.state, self.tools)
             return result
-        except Exception as e:
-            logging.error(f"Error executing task {task.id}: {str(e)}")
-            return TaskResult(id=task.id, error=str(e))
+        except Exception:
+            logging.error(f"Error executing task {task.id}: {traceback.format_exc()}")
+            return TaskResult(id=task.id, error=f"{traceback.format_exc()}")
 
     def execute(self) -> None:
         """
