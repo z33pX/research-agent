@@ -12,7 +12,6 @@ from eezo.interface import Context
 from langchain_openai import ChatOpenAI
 from langchain.tools import BaseTool
 from pydantic import BaseModel
-from pinecone import Pinecone
 from langfuse import Langfuse
 
 
@@ -22,7 +21,6 @@ import uuid
 import json
 import os
 
-pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
 oc = openai.Client()
 l = Langfuse()
 
@@ -471,24 +469,5 @@ class ResearchTask:
             id=self.id,
             error="",
         )
-
-        span = l.span(
-            trace_id=self.trace.id,
-            name="Embedding",
-            metadata={"database": "pinecone"},
-            input={"notes": notes},
-        )
-        index = pc.Index("research-agent")
-        data = oc.embeddings.create(input=notes, model="text-embedding-3-small")
-        span.end()
-
-        span = l.span(
-            trace_id=self.trace.id,
-            name="Upsert",
-            metadata={"database": "pinecone"},
-            input={"text": notes},
-        )
-        index.upsert([(str(uuid.uuid4()), data.data[0].embedding, {"text": notes})])
-        span.end()
 
         return results

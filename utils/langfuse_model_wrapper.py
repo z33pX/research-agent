@@ -2,12 +2,10 @@ from langfuse.model import TextPromptClient
 from langfuse import Langfuse
 from groq import Groq
 
-import anthropic
 import logging
 import openai
 import time
 
-a = anthropic.Anthropic()
 l = Langfuse()
 g = Groq()
 
@@ -69,23 +67,6 @@ def langfuse_model_wrapper(
         input_tokens = completion.usage.prompt_tokens
         output_tokens = completion.usage.completion_tokens
         total_tokens = completion.usage.total_tokens
-    if host == "anthropic":
-        completion = a.messages.create(
-            model=model,
-            system=system_prompt,
-            messages=[
-                {"role": "user", "content": user_prompt},
-            ],
-        )
-        result = ""
-        for component in completion.content:
-            if component.type == "text":
-                result += component.text
-
-        input_tokens = completion.usage.input_tokens
-        output_tokens = completion.usage.output_tokens
-        total_tokens = input_tokens + output_tokens
-
     duration = time.time() - start
 
     generation.end(

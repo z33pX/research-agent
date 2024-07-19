@@ -1,49 +1,40 @@
 # !Rename this file to .env!
 
 # OpenAI
-
+# https://platform.openai.com/signup
 OPENAI_API_KEY =
 
-# Pinecone
-
-PINECONE_API_KEY =
-PINECONE_ENVIRONMENT =
-
-# Eezo
-
-EEZO_API_KEY =
-
-# Exa
-
+# Exa (Free)
+# https://dashboard.exa.ai/login
 EXA_API_KEY =
 
-# Zyte
+# Eezo (Free)
+# https://eezo.ai/sign-up
+EEZO_API_KEY =
 
+# Zyte (Free)
+# https://app.zyte.com/account/signup
 ZYTE_API_KEY =
 
-# Groq
-
+# Groq (Free)
+# https://groq.com/
 GROQ_API_KEY =
 
-# You.com
-
+# You.com (Free)
+# https://you.com/
 YOUCOM_API_KEY =
-YOUCOM_RAG_API_KEY =
 
-# Brave Search
-
+# Brave Search (Free)
+# https://api.search.brave.com/register
 BRAVE_SEARCH_API_KEY =
 
-# SerperApi
-
+# SerperApi (Free)
+# https://serper.dev/signup
 SERPER_API_KEY =
 
-# Antropic
 
-ANTHROPIC_API_KEY =
-
-# Langfuse
-
+# Langfuse (Optional, Free)
+# https://cloud.langfuse.com/auth/sign-up
 LANGFUSE_SECRET_KEY =
 LANGFUSE_PUBLIC_KEY =
 LANGFUSE_HOST = https://cloud.langfuse.com
