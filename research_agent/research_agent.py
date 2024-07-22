@@ -3,13 +3,13 @@ from utils.langfuse_model_wrapper import langfuse_model_wrapper
 from .research_task_scheduler import TaskScheduler
 from .research_task import ResearchTask, TaskResult
 from langfuse.client import StatefulTraceClient
-
 from eezo.interface import Context
 from pydantic import BaseModel, Field
 from langchain.tools import BaseTool
 from langfuse import Langfuse
 from datetime import datetime
 from typing import List, Dict, Any
+from prompts import Prompt
 from eezo import Eezo
 
 import json
@@ -18,9 +18,9 @@ import json
 l = Langfuse()
 e = Eezo()
 
-generate_outline = l.get_prompt("research-agent-generate-outline")
-outline_to_dag = l.get_prompt("research-agent-outline-to-dag-conversion")
-research_section_summarizer = l.get_prompt("research-section-summarizer")
+generate_outline = Prompt("research-agent-generate-outline")
+outline_to_dag = Prompt("research-agent-outline-to-dag-conversion")
+research_section_summarizer = Prompt("research-section-summarizer")
 
 
 class Question(BaseModel):
