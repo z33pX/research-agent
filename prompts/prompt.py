@@ -35,7 +35,12 @@ class Prompt:
     def compile(self, **kwargs):
         template = self.template
         if not self.from_langfuse:
-            template = re.sub(r"{{\s*(\w+)\s*}}", r"{\1}", template)
-            return template.format(**kwargs)
+
+            def replace(match):
+                var_name = match.group(1)
+                return kwargs.get(var_name, match.group(0))
+
+            # Use a custom function to replace only the double curly braces
+            return re.sub(r"{{\s*(\w+)\s*}}", replace, template)
         # Compile Langfuse template
         return template.compile(**kwargs)

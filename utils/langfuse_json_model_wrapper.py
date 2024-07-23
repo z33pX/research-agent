@@ -44,7 +44,7 @@ def langfuse_json_model_wrapper(
             "temperature": temperature,
             "base_model": base_model.model_json_schema(),
         },
-        prompt=prompt,
+        prompt=prompt if isinstance(prompt, TextPromptClient) else None,
     )
 
     client = instructor.from_openai(OpenAI())

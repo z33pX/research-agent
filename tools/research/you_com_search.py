@@ -47,7 +47,7 @@ class YouComSearch(BaseTool):
         result = self.you_com_search(kwargs["query"])
 
         content = []
-        for hit in result["hits"]:
+        for hit in result.get("hits", []):
             if type(hit["ai_snippets"]) == str:
                 hit["ai_snippets"] = [hit["ai_snippets"]]
             content.append(
