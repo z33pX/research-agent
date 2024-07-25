@@ -1,6 +1,6 @@
 # Research Agent
 
-This Research Agent is a powerful tool designed to automate the process of gathering and distiling data into a report using a variety of APIs and web scraping (Langchain) tools.
+This Research Agent is a powerful tool designed to automate the process of gathering and distilling data into a report using a variety of APIs and web scraping (Langchain) tools.
 
 It generates research outlines, converts them into Directed Acyclic Graphs (DAGs), scrapes webpages, and interacts with APIs (such as Brave, You, Exa, etc.) to answer each question in the outline. You can also add your own tools to connect additional data sources.
 
