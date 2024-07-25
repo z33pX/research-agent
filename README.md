@@ -23,6 +23,48 @@ The planning step does not include any form of reflection or feedback from the u
   <p>Watch our demo to see the Research Agent in action, from generating research outlines to summarizing comprehensive responses.</p>
 </div>
 
+## Getting Started
+
+To get started with this research agent, follow these steps:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/z33pX/research-agent.git
+   ```
+
+2. **Navigate to the project directory:**
+
+   ```bash
+   cd research-agent
+   ```
+
+3. **Set up a virtual environment:**
+
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate   # On Windows use `venv\Scriptsctivate`
+   ```
+
+4. **Install the required dependencies:**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Rename the `env` file to `.env` and fill in the necessary keys:**
+
+   ```bash
+   mv env .env
+   # Open the .env file and add your keys
+   ```
+
+6. **Run the agent:**
+
+   ```bash
+   python app.py
+   ```
+
 ## Overview
 
 This research agent workflow involves a user providing a prompt, which is processed by an LLM to generate an outline and a directed acyclic graph (DAG) of research topics (questions and their sub-questions). The task scheduler then executes tasks for each topic, collecting and storing content using various search tools (LangChain plug-and-play), evaluating its relevancy, and potentially generating additional research topics if more content is needed. After extracting cliff notes for each topic, the agent combines and summarizes them into one concise summary.
@@ -100,48 +142,6 @@ This tool retrieves relevant data from SimilarWeb based on the user prompt. For 
 This tool processes user queries by first using Exa Company Search to find relevant company information. It then scrapes the identified websites for content, which is subsequently processed by an LLM to generate a response for the user.
 
 ![Exa Company Search](images/exa-company-search.png)
-
-## Getting Started
-
-To get started with this research agent, follow these steps:
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/z33pX/research-agent.git
-   ```
-
-2. **Navigate to the project directory:**
-
-   ```bash
-   cd research-agent
-   ```
-
-3. **Set up a virtual environment:**
-
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate   # On Windows use `venv\Scriptsctivate`
-   ```
-
-4. **Install the required dependencies:**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-5. **Rename the `env` file to `.env` and fill in the necessary keys:**
-
-   ```bash
-   mv env .env
-   # Open the .env file and add your keys
-   ```
-
-6. **Run the agent:**
-
-   ```bash
-   python app.py
-   ```
 
 ## Contributing
 
