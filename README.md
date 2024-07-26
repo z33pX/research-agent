@@ -10,7 +10,7 @@ Consider this a draft. There is potential to improve both the repository and the
 
 Flat vs. Depth: The research agent works well for topics that are widely covered on the internet, such as USA visa options and key metrics for SaaS companies. However, it is less effective for in-depth searches.
 
-The planning step does not include any form of reflection or feedback from the user.
+The planning step does not include any form of reflection or feedback from the user. The [ADePT](https://arxiv.org/abs/2106.08321) paper could be a valid strategy here.
 
 ## Demo
 
