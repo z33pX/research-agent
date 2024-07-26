@@ -27,29 +27,23 @@ The planning step does not include any form of reflection or feedback from the u
 
 To get started with this research agent, follow these steps:
 
-1. **Clone the repository:**
+1. **Clone the repository and prepare venv:**
 
    ```bash
+   # Clone the repository
    git clone https://github.com/z33pX/research-agent.git
-   ```
-
-2. **Navigate to the project directory:**
-
-   ```bash
+    
+   # Navigate to the project directory
    cd research-agent
-   ```
-
-3. **Set up a virtual environment:**
-
-   ```bash
+    
+   # Set up a virtual environment
    python3 -m venv venv
-   source venv/bin/activate   # On Windows use `venv\Scriptsctivate`
-   ```
+    
+   # Activate the virtual environment and install dependencies
+   source venv/bin/activate && pip install -r requirements.txt
+   # On Windows, use the following instead of the above command:
+   # venv\Scripts\activate && pip install -r requirements.txt
 
-4. **Install the required dependencies:**
-
-   ```bash
-   pip install -r requirements.txt
    ```
 
 5. **Rename the `env` file to `.env` and fill in the necessary keys:**
