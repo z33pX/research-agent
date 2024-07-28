@@ -147,4 +147,5 @@ This project is licensed under the MIT License, allowing for free use, modificat
 
 ## Contact
 
-For any questions or suggestions, please contact the project maintainer on [X (Twitter)](https://x.com/dan_schoenbohm).
+For any questions or suggestions, please contact me on [X (Twitter)](https://x.com/dan_schoenbohm).
+Receive practical AI-related news, including hands-on tutorials, tools, and research: [Tech-Optimist](https://tech-optimist.com/)
