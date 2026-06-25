@@ -35,7 +35,7 @@ class YouComSearch(BaseTool):
         self.include_summary = include_summary
 
     def you_com_search(self, query):
-        headers = {"X-API-Key": os.environ["YOUCOM_API_KEY"]}
+        headers = {"X-API-Key": os.environ.get("YDC_API_KEY") or os.environ["YOUCOM_API_KEY"]}
         params = {"query": query}
         return requests.get(
             f"https://api.ydc-index.io/rag?query={query}",
