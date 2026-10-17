@@ -113,6 +113,42 @@ This research agent workflow involves a user providing a prompt, which is proces
 
 ## Tools
 
+### Parallel Search and Fetch
+
+The app uses free [Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp)
+for general web search and page fetching when `YOUCOM_API_KEY` is empty. Search uses
+Fast mode and needs no Parallel account or API key. Search excerpts and source URLs
+flow into the existing research task's content selection and note extraction.
+Fetch is available when the agent needs to read specific pages. Anonymous usage is
+rate limited; errors are surfaced without switching providers.
+
+`RESEARCH_WEB_SEARCH` in `.env` controls the app's general web tools:
+
+| Value | Behavior |
+| --- | --- |
+| `auto` (default) | Keep You.com when `YOUCOM_API_KEY` is set; otherwise use Parallel search and fetch. |
+| `parallel` | Use Parallel even when a You.com key is set. |
+| `youcom` | Use the existing You.com tool and its API key. |
+| `none` | Disable general web search and fetch. Specialized news, company and traffic tools remain available. |
+
+An environment variable takes precedence over `.env`, as before. Custom
+`ResearchAgent(tools)` lists remain the tool allowlist, including an empty list.
+The OpenAI, Groq, Eezo and specialized-tool setup described above still applies.
+Parallel calls use a 60-second HTTP timeout; programmatic callers can pass
+`ParallelSearch(timeout=30)` or `ParallelFetch(timeout=30)`. Both support LangChain
+`invoke` and cancellable `ainvoke` calls.
+
+For just these tools, install the existing pinned `langchain==0.2.7`,
+`pydantic==2.7.1` and `httpx==0.27.0` dependencies, then run:
+
+```python
+from tools import ParallelSearch
+
+result = ParallelSearch().invoke({"query": "What is retrieval augmented generation?"})
+for item in result.content:
+    print(item.title, item.url, item.content)
+```
+
 ### News Search
 
 This tool searches for news on Google using the Serper API by first selecting relevant links with an LLM. It then scrapes the selected websites for content, which is processed by the LLM to generate a response.

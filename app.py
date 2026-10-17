@@ -15,7 +15,7 @@ e = Eezo()
 
 # To connect more sources, copy one of the existing tools in the tools/research
 # folder and connect it to your data source. Then, add it to the list below.
-tools = [YouComSearch(), SimilarWebSearch(), ExaCompanySearch(), NewsSearch()]
+tools = create_default_tools()
 
 # Check if the agent already exists, if not, create it.
 ra: Agent = e.get_agent("research-agent")

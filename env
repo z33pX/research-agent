@@ -24,6 +24,10 @@ GROQ_API_KEY =
 # https://you.com/
 YOUCOM_API_KEY =
 
+# General web search: auto keeps configured You.com, otherwise uses keyless Parallel.
+# Set parallel, youcom, or none to override (none disables general search/fetch).
+RESEARCH_WEB_SEARCH = auto
+
 # Brave Search (Free)
 # https://api.search.brave.com/register
 BRAVE_SEARCH_API_KEY =
